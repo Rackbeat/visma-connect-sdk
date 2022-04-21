@@ -1,0 +1,59 @@
+{
+	"name": "rackbeat/laravel-visma-connect",
+	"description": "Laravel Wrapper for Visma Connect",
+	"keywords": [
+		"rackbeat",
+		"php",
+		"sdk",
+		"api",
+		"api wrapper",
+		"laravel",
+		"php sdk",
+		"visma",
+		"visma connect"
+	],
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Lasse Rafn",
+			"email": "lasserafn@gmail.com"
+		},
+		{
+			"name": "Rackbeat",
+			"email": "open-source@rackbeat.com"
+		}
+	],
+	"require": {
+		"php": "^7.4",
+		"ext-json": "*",
+		"laravel/framework": "^8.0|^9.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^7.5|^8.0",
+		"php-coveralls/php-coveralls": "^2.2"
+	},
+	"autoload": {
+		"psr-4": {
+			"Rackbeat\\VismaConnect\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Rackbeat\\VismaConnect\\VismaConnectServiceProvider"
+			],
+			"aliases": {
+				"VismaConnect": "Rackbeat\\VismaConnect\\VismaConnect"
+			}
+		}
+	},
+	"config": {
+		"sort-packages": true
+	}
+}
