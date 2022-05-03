@@ -57,7 +57,7 @@ class VismaConnectApiClient
 			'scope'         => implode(' ', $this->scopes ?? config('visma_connect.api.scopes'))
 		], $config);
 
-		$response = Http::asForm()->post(
+		$response = Http::timeout(15)->asForm()->post(
 			config('visma_connect.oauth.base_urls.'.config('visma_connect.environment')).static::ENDPOINT_TOKEN,
 			$config
 		);
@@ -95,6 +95,8 @@ class VismaConnectApiClient
 			]);
 
 			$client->withToken($accessToken);
+
+			$client->timeout(15);
 
 			return $client;
 		});

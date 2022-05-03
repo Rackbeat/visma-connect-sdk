@@ -79,7 +79,7 @@ class VismaConnectAuthenticationClient
 			'redirect_uri'  => config('visma_connect.oauth.redirect_uri'),
 		]), $config);
 
-		$response = Http::asForm()->post(
+		$response = Http::timeout(15)->asForm()->post(
 			$this->baseUrl.static::ENDPOINT_TOKEN,
 			$config
 		);
@@ -93,7 +93,7 @@ class VismaConnectAuthenticationClient
 
 	public function getUserInfo(string $accessToken): OAuthUserInfoResponse
 	{
-		$response = Http::withToken($accessToken)->get(
+		$response = Http::timeout(15)->withToken($accessToken)->get(
 			$this->baseUrl.static::ENDPOINT_USER_INFO
 		);
 
@@ -118,7 +118,7 @@ class VismaConnectAuthenticationClient
 			'post_logout_redirect_uri' => config('visma_connect.oauth.redirect_uri'),
 		];
 
-		return Http::baseUrl($this->baseUrl)->get($url, $config)->throw();
+		return Http::timeout(15)->baseUrl($this->baseUrl)->get($url, $config)->throw();
 	}
 
 	public function getLogoutUrl(string $idToken)
