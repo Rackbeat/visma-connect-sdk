@@ -158,6 +158,8 @@ return [
 			'publicapi:tenant:update',
 			'publicapi:tenant:user:read',
 			'publicapi:tenant:user:update',
+			'publicapi:tenant:user:create',
+			'publicapi:tenant:user:delete',
 			'publicapi:user:allowemailchange',
 			'publicapi:user:create',
 			'publicapi:user:delete',
