@@ -48,6 +48,12 @@ class TenantResource extends CrudResource
 		])->throw()->json();
 	}
 
+	public function addUserToTenant(string $tenantId, string $userId)
+	{
+		// todo error handling
+		return Http::vismaConnectApi()->post('tenants/' . $tenantId . '/users/' . $userId)->throw()->json();
+	}
+
 	public static function getSyncRolesByApplicationUrlFormat($replacer = '%s') {
 		return "{$replacer}/{$replacer}/applications/{$replacer}/users/{$replacer}/roles";
 	}
