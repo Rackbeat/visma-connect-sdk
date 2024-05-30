@@ -2,7 +2,9 @@
 
 namespace Rackbeat\VismaConnect\Resources;
 
+use App\Tenancy\Tenant;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Http;
 use Rackbeat\VismaConnect\Auth\Responses\OAuthUserInfoResponse;
 use Rackbeat\VismaConnect\Exceptions\Models\Users\InvalidEmail;
 use Rackbeat\VismaConnect\Exceptions\Models\Users\InvalidPassword;
@@ -70,5 +72,49 @@ class UserResource extends CrudResource
 			//			'2step_enforced' => '',
 			//			'password' => '',
 		]);
+	}
+
+	/**
+	 * @param User      $user
+	 * @param string|null $applicationId
+	 *
+	 * @return \Rackbeat\VismaConnect\Models\Tenant[]
+	 * @throws \Illuminate\Http\Client\RequestException
+	 */
+	public function getTenantsForUser(User $user, ?string $applicationId = null):array
+	{
+		return $this->getTenantsForUserById($user->id, $applicationId);
+	}
+
+	/**
+	 * @param OAuthUserInfoResponse      $userInfoResponse
+	 * @param string|null $applicationId
+	 *
+	 * @return \Rackbeat\VismaConnect\Models\Tenant[]
+	 * @throws \Illuminate\Http\Client\RequestException
+	 */
+	public function getTenantsForUserInfo(OAuthUserInfoResponse $userInfoResponse, ?string $applicationId = null):array
+	{
+		return $this->getTenantsForUserById($userInfoResponse->sub, $applicationId);
+	}
+
+	/**
+	 * @param string      $userId
+	 * @param string|null $applicationId
+	 *
+	 * @return \Rackbeat\VismaConnect\Models\Tenant[]
+	 * @throws \Illuminate\Http\Client\RequestException
+	 */
+	public function getTenantsForUserById(string $userId, ?string $applicationId = null):array
+	{
+		// todo error handling
+		$tenants = Http::vismaConnectApi()->get(
+			sprintf( 'tenants/applications/%s/users/%s',
+				( $applicationId ?? config( 'visma_connect.client_id' ) ), $userId
+			) )->throw()->json();
+
+		return array_map(function ($tenant) {
+			return new \Rackbeat\VismaConnect\Models\Tenant($tenant);
+		}, $tenants);
 	}
 }
