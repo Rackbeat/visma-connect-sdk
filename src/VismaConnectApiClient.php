@@ -18,7 +18,8 @@ class VismaConnectApiClient
 	private ?string $accessToken = null;
 	private ?array $scopes = null;
 
-	public const ENDPOINT_TOKEN       = '/connect/token';
+	public const ENDPOINT_TOKEN       	 = '/connect/token';
+	public const ENDPOINT_USER_TENANTS       = '/tenants/applications/%s/users/%s';
 
 	public function __construct(?string $accessToken = null, ?string $clientId = null, ?string $clientSecret = null, ?array $scopes = null)
 	{
