@@ -11,6 +11,7 @@ use Rackbeat\VismaConnect\Exceptions\Models\Users\InvalidPassword;
 use Rackbeat\VismaConnect\Exceptions\Models\Users\UserAlreadyLinkedToClient;
 use Rackbeat\VismaConnect\Exceptions\Models\Users\UserDataValidationException;
 use Rackbeat\VismaConnect\Models\User;
+use Rackbeat\VismaConnect\VismaConnectApiClient;
 
 class UserResource extends CrudResource
 {
@@ -109,7 +110,8 @@ class UserResource extends CrudResource
 	{
 		// todo error handling
 		$tenants = Http::vismaConnectApi()->get(
-			sprintf( 'tenants/applications/%s/users/%s',
+			sprintf( 
+				VismaConnectApiClient::ENDPOINT_USER_TENANTS,
 				( $applicationId ?? config( 'visma_connect.client_id' ) ), $userId
 			) )->throw()->json();
 
