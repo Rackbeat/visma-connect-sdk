@@ -117,6 +117,6 @@ class UserResource extends CrudResource
 
 		return array_map(function ($tenant) {
 			return new \Rackbeat\VismaConnect\Models\Tenant($tenant);
-		}, $tenants);
+		}, $tenants ?? []);
 	}
 }
