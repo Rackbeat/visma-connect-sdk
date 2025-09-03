@@ -1,5 +1,7 @@
 **~~~~~~ BY NO MEANS READY YET! ~~~~~~**
 
+https://confluence.visma.com/display/PROV/Visma+Connect+Public+API#
+
 # TODO
 - [ ] Lots of stuffs... models and endpoints
 - [ ] Better error handling?
